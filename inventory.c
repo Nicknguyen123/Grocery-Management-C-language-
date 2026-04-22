@@ -7,6 +7,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <ctype.h>
+#include <time.h>
 
 // Update stock
 void updateStock() {
@@ -34,14 +35,14 @@ void updateStock() {
 				system("cls");
 				writeData1("  ✅  Quantity saved successfully!\n");
 				writeData2("  ✅  Transaction saved successfully!\n");
-				
+
 				do {
 					printf("🔄  Do you want to update stock with another product? (Y/N): ");
 					fgets(temp, sizeof(temp), stdin);
 					temp[strcspn(temp, "\n")] = '\0';
 					yesNo = temp[0];
 				} while (!checkInputForYN(yesNo));
-				
+
 				if (yesNo == 'Y' || yesNo == 'y') {
 					continue;
 				} else {
@@ -64,7 +65,6 @@ void updateStock() {
 				break;
 			}
 		}
-
 	}
 }
 
@@ -172,4 +172,76 @@ void export(int index) {
 	sp[index].quantity = sp[index].quantity - tempQuantity;
 
 	printf("  ✅  Export stock successfully! %s: %d → %d\n", sp[index].productName, sp[index].quantity + tempQuantity, sp[index].quantity);
+}
+
+// transaction history
+void showTransaction() {
+	char temp[20];
+	char yesNo;
+	while (1) {
+		system("cls");
+		printf("╔════════════════════════════════════════════╗\n");
+		printf("║  📜   TRANSACTION HISTORY                  ║\n");
+		printf("╚════════════════════════════════════════════╝\n");
+
+		int found = searchBySku();
+
+		if (found != -1) {
+			do {
+				printf("📜  Do you want to see transaction history of product above? (Y/N): ");
+				fgets(temp, sizeof(temp), stdin);
+				temp[strcspn(temp, "\n")] = '\0';
+				yesNo = temp[0];
+			} while (!checkInputForYN(yesNo));
+
+			if (yesNo == 'Y' || yesNo == 'y') {
+				showTransaction1(found);
+
+				do {
+					printf("📜  Do you want to see transaction history of another product? (Y/N): ");
+					fgets(temp, sizeof(temp), stdin);
+					temp[strcspn(temp, "\n")] = '\0';
+					yesNo = temp[0];
+				} while (!checkInputForYN(yesNo));
+
+				if (yesNo == 'Y' || yesNo == 'y') {
+					continue;
+				} else {
+					break;
+				}
+			} else {
+				break;
+			}
+		} else {
+			do {
+				printf("📜  Do you want to see transaction history of another product? (Y/N): ");
+				fgets(temp, sizeof(temp), stdin);
+				temp[strcspn(temp, "\n")] = '\0';
+				yesNo = temp[0];
+			} while (!checkInputForYN(yesNo));
+
+			if (yesNo == 'Y' || yesNo == 'y') {
+				continue;
+			} else {
+				break;
+			}
+		}
+	}
+}
+
+void showTransaction1(int index) {
+	system("cls");
+	printf("╔══════════════╦══════════════╦══════════╦══════════╦═════════════════════╗\n");
+	printf("║ TransactionID║     SKU      ║   Type   ║   Qty    ║      Timestamp      ║\n");
+	printf("╠══════════════╬══════════════╬══════════╬══════════╬═════════════════════╣\n");
+	for (int i = 0; i < transactionCount; i++) {
+		if (strcmp(gd[i].sku, sp[index].sku) == 0) {
+			char timeStr[20];
+			struct tm *t = localtime(&gd[i].timestamp);
+			strftime(timeStr, sizeof(timeStr), "%d/%m/%Y %H:%M:%S", t);
+			printf("║ %-12s ║ %-12s ║ %-8s ║ %8d ║ %-19s ║\n", gd[i].transactionId, gd[i].sku, 
+			gd[i].type == 0 ? "Import" : "Export", gd[i].quantity, timeStr);
+		}
+	}
+	printf("╚══════════════╩══════════════╩══════════╩══════════╩═════════════════════╝\n");
 }

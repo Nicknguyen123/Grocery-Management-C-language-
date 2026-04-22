@@ -63,7 +63,7 @@ int checkInputForSku(char *s) {
         if (!isdigit(s[i])) {
             printf("  ❌  Invalid SKU! Last 6 characters must be digits (e.g. SKU000001)\n");
             return 0;
-        }
+        } // SKU123o56
     }
     printf("  ✅  Valid SKU format!\n");
     return 1;

@@ -263,6 +263,7 @@ void editCaterogy(int index) {
 		printf("🗂️ Enter new Category (Food / Household / School Supplies / Toy): ");
 		fgets(sp[index].category, sizeof(sp[index].category), stdin);
 		sp[index].category[strcspn(sp[index].category, "\n")] = '\0';
+		beautifyString(sp[index].category);
 	} while (!checkInputForCaterogy(sp[index].category, "  ✅  Valid caterogy!\n"));
 
 	printf("  ✅  Category updated successfully!\n");
@@ -356,7 +357,7 @@ void deleteProduct() {
 					writeData1("  ✅  Product deleted successfully!\n");
 				} else {
 					printf("  ❌  Cannot delete! Product still has stock in warehouse!\n");
-					printf("⚠ Please export all stock before deleting this product!\n");
+					printf("⚠  Please export all stock before deleting this product!\n");
 				}
 
 				do {
@@ -451,26 +452,25 @@ int searchBySku() {
 	printf("📝 Please enter the SKU you want to search:\n");
 	printf("⚠  SKU format: SKU + 6 digits (e.g. SKU000001)\n\n");
 
-	char temp[20];
+	char temp[20]; 
 
 	do {
 		printf("🔑 Enter SKU: ");
 		fgets(temp, sizeof(temp), stdin);
 		temp[strcspn(temp, "\n")] = '\0';
-		convertUppercase(temp);
+		convertUppercase(temp);  
 	} while (!checkInputForSku(temp));
 
 	for (int i = 0; i < productCount; i++) {
 		if (strcmp(sp[i].sku, temp) == 0) {
 			printf("  ✅  Product found!\n\n");
-			printf("+============+======================+================+======+==============+==============+===========+\n");
-			printf("| %-10s | %-20s | %-14s | %4s | %12s | %12s | %9s |\n",
-			       "SKU", "Name", "Category", "Qty", "Import Price", "Sell Price", "Threshold");
-			printf("+============+======================+================+======+==============+==============+===========+\n");
-			printf("| %-10s | %-20s | %-14s | %4d | %12lld | %12lld | %9d |\n",
-			       sp[i].sku, sp[i].productName, sp[i].category,
-			       sp[i].quantity, sp[i].importPrice, sp[i].sellPrice, sp[i].lowStockThreshold);
-			printf("+============+======================+================+======+==============+==============+===========+\n");
+			printf("+============+======================+=================+======+==============+==============+===========+\n");
+			printf("| %-10s | %-20s | %-15s | %4s | %12s | %12s | %9s |\n", "SKU", "Name", "Category", "Qty", "Import Price", 
+			"Sell Price", "Threshold");
+			printf("+============+======================+=================+======+==============+==============+===========+\n");
+			printf("| %-10s | %-20s | %-15s | %4d | %12lld | %12lld | %9d |\n", sp[i].sku, sp[i].productName, sp[i].category, 
+			sp[i].quantity, sp[i].importPrice, sp[i].sellPrice, sp[i].lowStockThreshold);
+			printf("+============+======================+=================+======+==============+==============+===========+\n");
 			return i;
 		}
 	}

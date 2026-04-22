@@ -13,7 +13,7 @@ typedef struct {
 } Product;
 
 extern Product sp[10000];
-extern int productCount;
+extern int productCount; 
 
 typedef struct {
     char transactionId[20];
