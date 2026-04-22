@@ -41,6 +41,15 @@ int checkInputForOptions(int choice, int n, char *s1, char *s2) {
 	return 1;
 }
 
+int checkInputForUpdateStock(int choice, int n) {
+	if (!(choice >= 1 && choice <= n)) {
+		printf("  ❌  Invalid quantity! Please enter a number between 1 and %d!\n", n);
+		return 0;
+	}
+	printf("  ✅  Valid quantity!\n");
+	return 1;
+}
+
 int checkInputForSku(char *s) {
     if (strlen(s) != 9) {
         printf("  ❌  Invalid SKU! Must be exactly 9 characters (e.g. SKU000001)\n");

@@ -49,6 +49,17 @@ void writeData1(char *s) {
     printf("%s", s);
 }
 
+void writeData2(char *s) {
+    FILE *f = fopen("dataoftransactions.bin", "wb");
+    if (f == NULL) {
+        printf("  ❌  Error opening file\n");
+        return;
+    }
+    fwrite(gd, sizeof(Transaction), transactionCount, f);
+    fclose(f);
+    printf("%s", s);
+}
+
 int countProductsInFile() {
 	FILE *f = fopen("dataofproducts.bin", "rb");
 	if (f == NULL) {

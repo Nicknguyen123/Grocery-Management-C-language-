@@ -4,6 +4,7 @@
 int stringToInt(const char *str, int *out);
 int stringToLongLong(const char *str, long long *out);
 int checkInputForOptions(int choice, int n, char *s1, char *s2);
+int checkInputForUpdateStock(int choice, int n);
 int checkInputForSku(char *s);
 int checkInputForName(char *s, char *s1);
 int checkInputForCaterogy(char *s, char *s1);

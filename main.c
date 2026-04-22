@@ -128,7 +128,7 @@ int main() {
 
 					switch (choice2) {
 						case 1:
-							printf("does not working hihi\n");
+							updateStock();
 							system("pause");
 							break;
 						case 2:
