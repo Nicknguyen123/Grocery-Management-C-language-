@@ -132,11 +132,11 @@ int main() {
 							system("pause");
 							break;
 						case 2:
-							printf("does not working hihi\n");
+							displayStock();
 							system("pause");
 							break;
 						case 3:
-							printf("does not working hihi\n");
+							showLowStock();
 							system("pause");
 							break;
 						case 4:

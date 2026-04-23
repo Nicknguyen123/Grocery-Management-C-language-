@@ -174,6 +174,76 @@ void export(int index) {
 	printf("  ✅  Export stock successfully! %s: %d → %d\n", sp[index].productName, sp[index].quantity + tempQuantity, sp[index].quantity);
 }
 
+// view stock status
+void displayStock() {
+	system("cls");
+	printf("╔════════════════════════════════════════════╗\n");
+	printf("║  📋   VIEW STOCK STATUS                    ║\n");
+	printf("╚════════════════════════════════════════════╝\n");
+
+	printf("\n📊 Stock Status Legend (e.g. Threshold = 10):\n");
+	printf("  \033[32m● High\033[0m   — Quantity > 20  (Threshold * 2)\n");
+	printf("  \033[33m● Medium\033[0m — Quantity <= 20 (Threshold * 2)\n");
+	printf("  \033[31m● Low\033[0m    — Quantity <= 10 (Threshold)\n\n");
+
+	printf("+============+======================+======+============+===========+========+\n");
+	printf("| %-10s | %-20s | %4s | %10s | %9s | %6s |\n",
+	       "SKU", "Name", "Qty", "Sell Price", "Threshold", "Status");
+	printf("+============+======================+======+============+===========+========+\n");
+	for (int i = 0; i < productCount; i++) {
+		char *color;
+		char *status;
+		if (sp[i].quantity <= sp[i].lowStockThreshold) {
+			color = "\033[31m"; // đỏ
+			status = "Low";
+		} else if (sp[i].quantity <= sp[i].lowStockThreshold * 2) {
+			color = "\033[33m"; // vàng
+			status = "Medium";
+		} else {
+			color = "\033[32m"; // xanh
+			status = "High";
+		}
+		printf("| %-10s | %-20s | %4d | %10lld | %9d | %s%-6s\033[0m |\n",
+		       sp[i].sku, sp[i].productName, sp[i].quantity,
+		       sp[i].sellPrice, sp[i].lowStockThreshold, color, status);
+	}
+	printf("+============+======================+======+============+===========+========+\n");
+}
+
+// low stock status
+void showLowStock() {
+	system("cls");
+	printf("╔════════════════════════════════════════════╗\n");
+	printf("║  🔔   LOW STOCK WARNING                    ║\n");
+	printf("╚════════════════════════════════════════════╝\n");
+
+	int total = countProductWithLowQuantity();
+	printf("\033[31m⚠️  WARNING: %d product(s) are running low on stock!\033[0m\n\n", total);
+
+	printf("+============+======================+======+===========+\n");
+	printf("| %-10s | %-20s | %4s | %9s |\n",
+	       "SKU", "Name", "Qty", "Threshold");
+	printf("+============+======================+======+===========+\n");
+	for (int i = 0; i < productCount; i++) {
+		if (sp[i].quantity <= sp[i].lowStockThreshold) {
+			printf("| \033[31m%-10s | %-20s | %4d | %9d\033[0m |\n",
+			       sp[i].sku, sp[i].productName,
+			       sp[i].quantity, sp[i].lowStockThreshold);
+		}
+	}
+	printf("+============+======================+======+===========+\n");
+}
+
+int countProductWithLowQuantity() {
+	int count = 0;
+	for (int i = 0; i < productCount; i ++) {
+		if (sp[i].quantity <= sp[i].lowStockThreshold) {
+			count ++;
+		}
+	}
+	return count;
+}
+
 // transaction history
 void showTransaction() {
 	char temp[20];
@@ -239,8 +309,8 @@ void showTransaction1(int index) {
 			char timeStr[20];
 			struct tm *t = localtime(&gd[i].timestamp);
 			strftime(timeStr, sizeof(timeStr), "%d/%m/%Y %H:%M:%S", t);
-			printf("║ %-12s ║ %-12s ║ %-8s ║ %8d ║ %-19s ║\n", gd[i].transactionId, gd[i].sku, 
-			gd[i].type == 0 ? "Import" : "Export", gd[i].quantity, timeStr);
+			printf("║ %-12s ║ %-12s ║ %-8s ║ %8d ║ %-19s ║\n", gd[i].transactionId, gd[i].sku,
+			       gd[i].type == 0 ? "Import" : "Export", gd[i].quantity, timeStr);
 		}
 	}
 	printf("╚══════════════╩══════════════╩══════════╩══════════╩═════════════════════╝\n");
