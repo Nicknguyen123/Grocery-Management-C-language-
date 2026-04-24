@@ -178,7 +178,7 @@ int main() {
 					} while (!checkInputForOptions(choice3, 4, "  ❌  Invalid Number. The number requires in (0-4)\n", "  ✅  Valid Number\n"));
 					switch (choice3) {
 						case 1:
-							printf("does not working hihi\n");
+							profitStatistic();
 							system("pause");
 							break;
 						case 2:
