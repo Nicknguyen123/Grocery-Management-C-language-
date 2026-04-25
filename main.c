@@ -3,6 +3,8 @@
 #include "struct.h"
 #include "product.h"
 #include "fileIO.h"
+#include "inventory.h"
+#include "report.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -25,7 +27,7 @@ int main() {
 	transactionCount = countTransactionsInFile();
 	readDataForTransaction();
 
-	char temp[10];
+	char temp[20];
 	int choice;
 	do {
 		system("cls");
@@ -42,13 +44,14 @@ int main() {
 			fgets(temp, sizeof(temp), stdin);
 			temp[strcspn(temp, "\n")] = '\0';
 			if (!stringToInt(temp, &choice)) {
+				choice = -1;
 				continue;
 			}
 		} while (!checkInputForOptions(choice, 3, "  ❌  Invalid Number. The number requires in (0-3)\n", "  ✅   Valid Number"));
 
 		switch (choice) {
 			case 1: {
-				char temp1[10];
+				char temp1[20];
 				int choice1;
 				do {
 					system("cls");
@@ -68,6 +71,7 @@ int main() {
 						fgets(temp1, sizeof(temp1), stdin);
 						temp1[strcspn(temp1, "\n")] = '\0';
 						if (!stringToInt(temp1, &choice1)) {
+							choice1 = -1;
 							continue;
 						}
 					} while (!checkInputForOptions(choice1, 5, "  ❌  Invalid Number. The number requires in (0-5)\n", "  ✅  Valid Number\n"));
@@ -103,7 +107,7 @@ int main() {
 				break;
 			}
 			case 2: {
-				char temp2[10];
+				char temp2[20];
 				int choice2;
 				do {
 					system("cls");
@@ -122,6 +126,7 @@ int main() {
 						fgets(temp2, sizeof(temp2), stdin);
 						temp2[strcspn(temp2, "\n")] = '\0';
 						if (!stringToInt(temp2, &choice2)) {
+							choice2 = -1;
 							continue;
 						}
 					} while (!checkInputForOptions(choice2, 4, "  ❌  Invalid Number. The number requires in (0-4)\n", "  ✅  Valid Number\n"));
@@ -154,7 +159,7 @@ int main() {
 				break;
 			}
 			case 3: {
-				char temp3[10];
+				char temp3[20];
 				int choice3;
 				do {
 					system("cls");
@@ -173,6 +178,7 @@ int main() {
 						fgets(temp3, sizeof(temp3), stdin);
 						temp3[strcspn(temp3, "\n")] = '\0';
 						if (!stringToInt(temp3, &choice3)) {
+							choice3 = -1;
 							continue;
 						}
 					} while (!checkInputForOptions(choice3, 4, "  ❌  Invalid Number. The number requires in (0-4)\n", "  ✅  Valid Number\n"));
@@ -182,8 +188,7 @@ int main() {
 							system("pause");
 							break;
 						case 2:
-							printf("does not working hihi\n");
-							system("pause");
+							filterByCaterogy();
 							break;
 						case 3:
 							printf("does not working hihi\n");

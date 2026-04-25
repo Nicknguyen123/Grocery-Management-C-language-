@@ -3,8 +3,8 @@
 
 void updateStock();
 void supportUpdate(int index);
-void import(int index);
-void export(int index);
+void importStock(int index);
+void exportStock(int index);
 void displayStock();
 void showLowStock();
 int countProductWithLowQuantity();

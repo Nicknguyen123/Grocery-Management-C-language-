@@ -95,12 +95,12 @@ void supportUpdate(int index) {
 		switch (choice) {
 			case 0:
 				system("cls");
-				import(index);
+				importStock(index);
 				system("pause");
 				break;
 			case 1:
 				system("cls");
-				export(index);
+				exportStock(index);
 				system("pause");
 				break;
 			case 2:
@@ -113,7 +113,7 @@ void supportUpdate(int index) {
 }
 
 // Import product;
-void import(int index) {
+void importStock(int index) {
 	char temp[20];
 	int tempQuantity;
 	printf("╔════════════════════════════════════════════╗\n");
@@ -145,7 +145,7 @@ void import(int index) {
 }
 
 // export product
-void export(int index) {
+void exportStock(int index) {
 	char temp[20];
 	int tempQuantity;
 	printf("╔════════════════════════════════════════════╗\n");
