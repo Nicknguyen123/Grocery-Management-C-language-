@@ -7,5 +7,6 @@ void showFood();
 void showHousehold();
 void showSchoolSupplies();
 void showToy();
+void sortProduct();
 
 #endif

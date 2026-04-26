@@ -175,3 +175,34 @@ void showToy() {
 	}
 	printf("+============+======================+======+==============+============+===========+\n");
 }
+
+// Sort product
+void sortProduct() {
+	system("cls");
+	printf("╔════════════════════════════════════════════╗\n");
+	printf("║  🔃   SORT PRODUCTS                        ║\n");
+	printf("╚════════════════════════════════════════════╝\n");
+
+	for (int i = 0; i < productCount - 1; i ++) {
+		for (int j = 0; j < productCount - 1; j ++) {
+			if (sp[j].quantity > sp[j + 1].quantity) {
+				Product temp = sp[j];
+				sp[j] = sp[j + 1];
+				sp[j + 1] = temp;
+			}
+		}
+	}
+
+	printf("+============+======================+==================+======+==============+==============+===========+\n");
+	printf("| %-10s | %-20s | %-16s | %4s | %12s | %12s | %9s |\n",
+	       "SKU", "Name", "Category", "Qty", "Import Price", "Sell Price", "Threshold");
+	printf("+============+======================+==================+======+==============+==============+===========+\n");
+
+	for (int i = 0; i < productCount; i++) {
+		printf("| %-10s | %-20s | %-16s | %4d | %12lld | %12lld | %9d |\n",
+		       sp[i].sku, sp[i].productName, sp[i].category,
+		       sp[i].quantity, sp[i].importPrice, sp[i].sellPrice, sp[i].lowStockThreshold);
+	}
+
+	printf("+============+======================+==================+======+==============+==============+===========+\n");
+}

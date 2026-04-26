@@ -191,7 +191,7 @@ int main() {
 							filterByCaterogy();
 							break;
 						case 3:
-							printf("does not working hihi\n");
+							sortProduct();
 							system("pause");
 							break;
 						case 4:
