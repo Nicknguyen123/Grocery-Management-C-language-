@@ -206,3 +206,55 @@ void sortProduct() {
 
 	printf("+============+======================+==================+======+==============+==============+===========+\n");
 }
+
+// export file txt
+void saveFileTxt() {
+	system("cls");
+	FILE *f = fopen("exportfiletxt.txt", "w");
+	if (f == NULL) {
+		printf("Error opening file\n");
+		return;
+	}
+
+	fprintf(f, "+============================================+\n");
+	fprintf(f, "|   DISPLAY ALL PRODUCTS                     |\n");
+	fprintf(f, "+============================================+\n");
+
+	fprintf(f, "+============+======================+==================+======+==============+==============+===========+\n");
+	fprintf(f, "| %-10s | %-20s | %-16s | %4s | %12s | %12s | %9s |\n",
+	        "SKU", "Name", "Category", "Qty", "Import Price", "Sell Price", "Threshold");
+	fprintf(f, "+============+======================+==================+======+==============+==============+===========+\n");
+	for (int i = 0; i < productCount; i ++) {
+		fprintf(f, "| %-10s | %-20s | %-16s | %4d | %12lld | %12lld | %9d |\n",
+		        sp[i].sku, sp[i].productName, sp[i].category,
+		        sp[i].quantity, sp[i].importPrice, sp[i].sellPrice, sp[i].lowStockThreshold);
+	}
+
+	fprintf(f, "+============+======================+==================+======+==============+==============+===========+\n");
+
+	fprintf(f, "\n");
+
+	fprintf(f, "+============================================+\n");
+	fprintf(f, "|   TRANSACTION HISTORY                      |\n");
+	fprintf(f, "+============================================+\n");
+
+	for (int i = 0; i < productCount; i++) {
+		fprintf(f, "\n  Product: %s - %s\n", sp[i].sku, sp[i].productName);
+		fprintf(f, "+===============+==============+==========+==========+=====================+\n");
+		fprintf(f, "| %-13s | %-12s | %-8s | %8s | %-19s |\n", "TransactionID", "SKU", "Type", "Qty", "Timestamp");
+		fprintf(f, "+===============+==============+==========+==========+=====================+\n");
+		for (int j = 0; j < transactionCount; j++) {
+			if (strcmp(gd[j].sku, sp[i].sku) == 0) {
+				char timeStr[20];
+				struct tm *t = localtime(&gd[j].timestamp);
+				strftime(timeStr, sizeof(timeStr), "%d/%m/%Y %H:%M:%S", t);
+				fprintf(f, "| %-13s | %-12s | %-8s | %8d | %-19s |\n", gd[j].transactionId, gd[j].sku,
+				        gd[j].type == 0 ? "Import" : "Export", gd[j].quantity, timeStr);
+			}
+		}
+		fprintf(f, "+===============+==============+==========+==========+=====================+\n");
+	}
+	fclose(f);
+
+	printf("  ✅  Report exported successfully!\n");
+}

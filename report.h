@@ -8,5 +8,6 @@ void showHousehold();
 void showSchoolSupplies();
 void showToy();
 void sortProduct();
+void saveFileTxt();
 
 #endif

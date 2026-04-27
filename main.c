@@ -195,7 +195,7 @@ int main() {
 							system("pause");
 							break;
 						case 4:
-							printf("does not working hihi\n");
+							saveFileTxt();
 							system("pause");
 							break;
 						case 0:
