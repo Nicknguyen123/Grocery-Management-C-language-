@@ -488,7 +488,7 @@ void searchByName() {
 	printf("  ⚠️   Search is case-insensitive (e.g. hao hao = Hao Hao)\n\n");
 
 	char temp[50];
-	int found;
+	int found = 0;
 
 	do {
 		printf("📝 Enter Product Name: ");

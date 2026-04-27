@@ -9,6 +9,7 @@ void displayStock();
 void showLowStock();
 int countProductWithLowQuantity();
 void showTransaction();
+int searchSkuInTransaction();
 void showTransaction1();
 
 #endif

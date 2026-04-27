@@ -254,7 +254,7 @@ void showTransaction() {
 		printf("║  📜   TRANSACTION HISTORY                  ║\n");
 		printf("╚════════════════════════════════════════════╝\n");
 
-		int found = searchBySku();
+		int found = searchSkuInTransaction();
 
 		if (found != -1) {
 			do {
@@ -299,13 +299,44 @@ void showTransaction() {
 	}
 }
 
+int searchSkuInTransaction() {
+	printf("╔════════════════════════════════════════════╗\n");
+	printf("║  🔑   SEARCH PRODUCT BY SKU                ║\n");
+	printf("╚════════════════════════════════════════════╝\n");
+
+	printf("📝 Please enter the SKU you want to search:\n");
+	printf("⚠  SKU format: SKU + 6 digits (e.g. SKU000001)\n\n");
+
+	char temp[20];
+
+	do {
+		printf("🔑 Enter SKU: ");
+		fgets(temp, sizeof(temp), stdin);
+		temp[strcspn(temp, "\n")] = '\0';
+		convertUppercase(temp);
+	} while (!checkInputForSku(temp));
+
+	int found = 0;
+	for (int i = 0; i < transactionCount; i++) {
+		if (strcmp(gd[i].sku, temp) == 0) {
+			printf("  ✅  SKU found!\n");
+			printf("%s\n", temp);
+			return i;
+		}
+	}
+
+
+		printf("  ❌  No transaction found for this SKU!\n");
+		return -1;
+}
+
 void showTransaction1(int index) {
 	system("cls");
 	printf("╔══════════════╦══════════════╦══════════╦══════════╦═════════════════════╗\n");
 	printf("║ TransactionID║     SKU      ║   Type   ║   Qty    ║      Timestamp      ║\n");
 	printf("╠══════════════╬══════════════╬══════════╬══════════╬═════════════════════╣\n");
 	for (int i = 0; i < transactionCount; i++) {
-		if (strcmp(gd[i].sku, sp[index].sku) == 0) {
+		if (strcmp(gd[i].sku, gd[index].sku) == 0) {
 			char timeStr[20];
 			struct tm *t = localtime(&gd[i].timestamp);
 			strftime(timeStr, sizeof(timeStr), "%d/%m/%Y %H:%M:%S", t);
